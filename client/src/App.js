@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -8,6 +8,8 @@ import CartPage from "./pages/CartPage";
 import CheckOut from "./pages/CheckOut";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import { useDispatch } from "react-redux";
+import { fetchProductsAsync } from "./features/products-list/productSlice";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,7 @@ const router = createBrowserRouter([
     element: <ProductListPage></ProductListPage>,
   },
   {
-    path: "/product-detail",
+    path: "/product-detail/:id",
     element: <ProductDetailsPage></ProductDetailsPage>,
   },
   {
@@ -41,6 +43,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // console.log("before");
+    dispatch(fetchProductsAsync());
+    // console.log("after");
+  }, [dispatch]);
   return (
     <div className="App">
       <RouterProvider router={router} />
