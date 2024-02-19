@@ -4,6 +4,8 @@ import { RadioGroup } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectProductById } from "../productSlice";
+import { useAlert } from "react-alert";
+import { addToCartAsync, selectItems } from "../../cart/cartSlice";
 
 const colors = [
   { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -31,7 +33,24 @@ function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState(sizes[2]);
   const product = useSelector(selectProductById);
   const params = useParams();
+  const items = useSelector(selectItems);
   const dispatch = useDispatch();
+  const alert = useAlert();
+
+  const handleCart = (e) => {
+    e.preventDefault();
+    // console.log(items);
+    // if (items.findIndex((item) => item.product.id === product.id) < 0) {
+    //   const newItem = {
+    //     product: product.id,
+    //     quantity: 1,
+    //   };
+    //   dispatch(addToCartAsync(newItem));
+    //   alert.success("Added to cart");
+    // } else {
+    //   alert.info("Alreay in Cart");
+    // }
+  };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
@@ -156,6 +175,7 @@ function ProductDetails() {
               </div>
 
               <button
+                // onClick={handleCart}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >

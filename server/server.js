@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import productRouter from "./routes/Product.js";
+import brandRouter from "./routes/Brand.js";
+import categoryRouter from "./routes/Category.js";
+import cartRouter from "./routes/Cart.js";
 import cors from "cors";
 
 const app = express();
@@ -11,6 +14,9 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 app.use("/products", productRouter);
+app.use("/brands", brandRouter);
+app.use("/categories", categoryRouter);
+app.use("/cart", cartRouter);
 
 main().catch((err) => console.log(err));
 
